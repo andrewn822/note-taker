@@ -8,6 +8,42 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
+// get route for all *
+app.get('*', (req, rest) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
 });
+//  route for notes
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'))
+});
+
+// route for saved notes
+app.get('/api/notes', (req ,res) => {
+    readFromFile('/db/db.json')
+    .then((data) => res.json(JSON.parse(data)))
+});
+
+app.post('/api/notes', (req,res) => {
+    const { title, text, } = req.body
+
+    if(title && text) {
+        const newNote = {
+            title,
+            text,
+            id: uuId()
+        };
+        readAndAppend(newNote, './db/db.json')
+        res.json(`new note added succfessfully`)
+    } else {
+        console.log('no new notes posted')
+    }
+
+})
+
+//listening on port
+app.listen(PORT, () =>
+console.log(`app listening at http://localhost:${PORT}`))
