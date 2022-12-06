@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001
 const path = require('path');
-
+const { readFromFile,
+    readAndAppend,
+    writeToFile, } = require ('./helpers/fsUtils')
 // middleware
 app.use(express.json());
 app.use(express.static('public'));
