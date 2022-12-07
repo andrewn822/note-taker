@@ -42,6 +42,7 @@ app.post('/api/notes', (req,res) => {
     }
     
 })
+
 // get route for all *
 app.get('*', (req, rest) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
