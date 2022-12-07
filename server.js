@@ -22,11 +22,11 @@ app.get('/notes', (req, res) => {
 
 // route for saved notes
 app.get('/api/notes', (req ,res) => {
-    readFromFile('/db/db.json')
+    readFromFile('./db/db.json')
     .then((data) => res.json(JSON.parse(data)))
 });
 
-app.post('/api/notes', (req,res) => {
+app.post('/api/notes', (req, res) => {
     const { title, text, } = req.body
     
     if(title && text) {
